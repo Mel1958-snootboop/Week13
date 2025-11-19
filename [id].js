@@ -5,18 +5,18 @@ import Layout from '../../components/layout';
 // Helpers for static generation: `getAllPostIds()` is used by
 // `getStaticPaths` to list all post IDs, and `getPostData(id)` fetches and
 // parses a single post's content/metadata (used in `getStaticProps`).
-import { getAllIds, getPostData } from '../../lib/posts-firebase';
+import { getAllIds, getData } from '../../lib/data';
 
 // Next.js `Head` lets you modify the document <head> for the page
 // (useful for setting the title, meta tags, etc.).
 import Head from 'next/head';
  
 export async function getStaticProps({ params }) {
-  const postData = await getPostData(params.id);
+  const itemData = await getData(params.id);
  // console.log
   return {
     props: {
-      postData,
+      itemData,
     },
   };
 }
@@ -40,7 +40,7 @@ export default function Entry({ itemData }) {
         <div className="card-body">
          <h5 className="card-title">{itemData.post_title}</h5>
          <h6 className="card-subtitle mb-2 text-muted">{itemData.user_login}</h6>
-         <div className="card-text">{itemData.post_content}</div>
+         <div className="card-text" dangerouslySetInnerHTML={{__html: itemData.post_content}} />
         </div>
       </article>
     </Layout>
