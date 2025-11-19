@@ -62,61 +62,6 @@
     
     }
 
-
-
-    // Also in Week 13:
-
-    // tell wp api to register a new REST url endpoint
-    add_action('rest_api_init', 'register_my_route2');
-
-function register_my_route2() {
-        // our custom funtion to register the new REST endpoint URL
-      register_rest_route(
-          'twentytwentyone-child/v1',
-          '/special',
-          array(
-              'methods' => 'GET',
-              'callback' => 'get_posts_via_sql'
-            )
-        );
-    }
-
-// our custom callback function that WP will run when the REST API endpoint URL we defined is recieved
-function get_posts_via_sql(){
-     // Step 1. we need to access to the $wpdb global variable 
-     global $wpdb;
-
-     // Step 2.get wordpress sql table prefix string to use in query, type "wp_"
-     $pre = $wpdb -> prefix;
-
-     // Step 3. define a sql query string that uses inner join to merge results across two tables
-     // EXAMPLE: $query = "SELECT * FROM wp_posts";
-     // SELECT wp_posts.ID, wp_posts.post_tittle, wp_posts.post_content, wp_users.user_login 
-     // FROM wp_posts 
-     // INNER JOIN wp_users 
-     // ON wp_posts.post_author = wp_users.ID 
-     // WHERE wp_posts.post_status = 'publish';
-}    $query = "SELECT " . $pre . "wp_posts.ID, ";
-     $query .= $pre . "posts.post_tittle, ";
-     $query .= $pre . "posts.post_content, ";
-     $query .= $pre . "users.user_login ";
-     $query .= "FROM " . $pre . "posts";
-     $query .= "INNER JOIN " . $pre . "users ";
-     $query .= "ON " . $pre . "posts.post_author = " . $pre . "users.ID ";
-     $query .= "WHERE " . $pre . "posts.post_status = 'publish';";
-
-     // Step 4. send the sql query via built-in method get_results() of the $wpdb global object
-     $results = $wpdb -> get_results( $query );
-
-     // Step 5. send back the data for the found post(s) using wp rest api
-     $response = new WP_REST_Response( $results );
-     $response -> set_status(200);
-
-     return $response;
-
-
-
-
     //
     // Week 13: Add two new custom post types via wp api
     function add_custom_post_types() {

@@ -1,7 +1,10 @@
 //They bring in components and styles needed to build and style the homepage.
  import Head from 'next/head';
 
-// Imports the Layout component for consistent page structure and the siteTitle variable for setting the page title.
+ // Link component for client-side navigation between pages.
+ import Link from 'next/link';
+
+ // Imports the Layout component for consistent page structure and the siteTitle variable for setting the page title.
  import Layout, { siteTitle } from '../components/layout';
 
  import { getSortedList } from '../lib/data';
