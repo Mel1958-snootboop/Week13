@@ -4,12 +4,12 @@ import Head from 'next/head';
 
 // Layout provides consistent page structure (header/footer and common meta)
 // used to wrap pages so they share the same site chrome.
-import Layout from '../components/layout';
+import Layout from '../../components/layout';
 
 // Helpers for static generation: `getAllPostIds()` is used by
 // `getStaticPaths` to list all post IDs, and `getPostData(id)` fetches and
 // parses a single post's content/metadata (used in `getStaticProps`).
-import { getAllIds, getData } from '../lib/data';
+import { getAllIds, getData } from '../../lib/data';
 
 export async function getStaticProps({ params }) {
   const itemData = await getData(params.id);
